@@ -6,7 +6,7 @@ from requester import Requester
 
 
 class LineDL(object):
-    def __init__(self):
+    def __init__(self, proxy):
         self.bad_kws = ['list', 'behind-the-scene', 'ตัวอย่าง']
         self.base_url = 'https://tv.line.me{}'
         self.api_url = 'http://global-nvapis.line.me/linetv/rmcnmv/vod_play_videoInfo.json?videoId={}&key={}'
@@ -18,7 +18,7 @@ class LineDL(object):
         self.title_pattern = re.compile('clickcr\(this, \'vpr\.title\', \'([A-Za-z0-9]+)\'')
         self.key_pattern = re.compile('id: \'([A-Za-z0-9]+)\',\s+key: \'([A-Za-z0-9]+)\'')
 
-        self.req = Requester()
+        self.req = Requester(proxy)
 
     def download_list(self, list_url):
         resp = self.req.getp(list_url)
@@ -52,8 +52,8 @@ class LineDL(object):
 
 
 if __name__ == '__main__':
-    url = 'https://tv.line.me/v/961128/list/82201'
-    proxy = '127.0.0.1:8080'
+    url = 'https://tv.line.me/v/972731/list/83021'
+    proxy = 'http://127.0.0.1:8080'
 
-    ldl = LineDL()
+    ldl = LineDL(proxy)
     ldl.download_list(url)
