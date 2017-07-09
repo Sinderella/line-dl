@@ -28,7 +28,13 @@ class Requester(object):
     @staticmethod
     def download(url, path, file_name):
         cleaned_fn = file_name.replace('/', '-') + '.mp4'
-        subprocess.Popen(['/usr/local/bin/aria2c', '-x', '4', '-d', path, '-o', cleaned_fn, url]).wait()
+        print(file_name)
+        print(url)
+        cmd = '/usr/local/bin/aria2c -x 4 -d {} -o "{}" --allow-overwrite=false --auto-file-renaming=false {}'.format(path, cleaned_fn, url)
+        print(cmd)
+        
+        subprocess.Popen(
+            ['/usr/local/bin/aria2c', '-x', '4', '-d', path, '-o', cleaned_fn, '--allow-overwrite=false', '--auto-file-renaming=false', url]).wait()
         # res = self.session.get(url, stream=True)
         # with open(os.path.join(path, cleaned_fn), 'wb') as f:
         #     for chunk in res.iter_content(chunk_size=2048):

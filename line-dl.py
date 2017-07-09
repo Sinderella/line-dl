@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import json
 import os
 import re
@@ -7,16 +9,14 @@ from requester import Requester
 
 class LineDL(object):
     def __init__(self, proxy):
-        self.bad_kws = ['list', 'behind-the-scene', 'ตัวอย่าง']
+        self.bad_kws = ['behind-the-scene']
         self.base_url = 'https://tv.line.me{}'
         self.api_url = 'http://global-nvapis.line.me/linetv/rmcnmv/vod_play_videoInfo.json?videoId={}&key={}'
-        # self.list_url = 'https://tv.line.me/v/947802/playlist/pentornewseason/81291/false/false'
-        # self.lists_url = 'https://tv.line.me/v/947802/playlists/pentornewseason/81291'
-        self.list_url = 'https://tv.line.me/v/{0}/playlist/{1}/{2}/false/false'
+        self.list_url = 'https://tv.line.me/api/{0}/playlist/{1}/{2}/false/false'
         self.playlist_pattern = re.compile('var currentClipNo = "([0-9]+)";\s+var currentPlaylistId = "([0-9]+)')
         self.playlist_api_pattern = re.compile('href="(.*?)"')
         self.title_pattern = re.compile('clickcr\(this, \'vpr\.title\', \'([A-Za-z0-9]+)\'')
-        self.key_pattern = re.compile('id: \'([A-Za-z0-9]+)\',\s+key: \'([A-Za-z0-9]+)\'')
+        self.key_pattern = re.compile('videoId: \'([A-Za-z0-9]+)\',\s+key: \'([A-Za-z0-9]+)\'')
 
         self.req = Requester(proxy)
 
@@ -52,8 +52,9 @@ class LineDL(object):
 
 
 if __name__ == '__main__':
-    url = 'https://tv.line.me/v/972731/list/83021'
-    proxy = 'http://127.0.0.1:8080'
+    urls = [
+            ]
+    proxy = ''
 
     ldl = LineDL(proxy)
-    ldl.download_list(url)
+    [ldl.download_list(url) for url in urls]
